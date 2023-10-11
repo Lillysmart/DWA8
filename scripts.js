@@ -282,7 +282,7 @@ const updateResults = (filteredBooks) => {
     fragment.appendChild(element);
   }
 
-  resultList.appendChild(fragment);
+  allHtmlElements.resultList.appendChild(fragment);
 
   // Update the "Show more" button state
   const remainingBooks = filteredBooks.length - endIndex;
