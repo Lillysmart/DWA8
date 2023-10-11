@@ -1,8 +1,10 @@
 //@ts-check
-import { books, authors, genres, BOOKS_PER_PAGE } from "/data.js";
+export const starting = document.createDocumentFragment();
+
+import { books, authors, genres, BOOKS_PER_PAGE } from "../data.js";
+import { allHtmlElements } from "./helpers.js";
 
 export let matches = books;
-export const starting = document.createDocumentFragment();
 
 /**
  *
@@ -32,3 +34,7 @@ bookPreviews.forEach((previewElement) => {
   starting.appendChild(previewElement);
 });
 //createPreview(book)
+console.log(allHtmlElements)
+//allHtmlElements.dataListButton.addEventListener("click", newDataListHandle);
+
+//allHtmlElements.dataListItems.appendChild(starting);
