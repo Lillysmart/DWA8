@@ -6,7 +6,7 @@ let page = 1;
 let matches = books;
 console.log (books[0])
 
-generateBookPreviews(matches, page);
+generateBookPreviews(matches, page-1);
 
 const genreHtml = document.createDocumentFragment();
 const firstGenreElement = document.createElement("option");
@@ -217,16 +217,7 @@ const updateResults = (filteredBooks) => {
   allHtmlElements.dataSearchOverlay.open = false;
 };
 allHtmlElements.dataSearchForm.addEventListener("submit", handleFormSubmission);
-/**
- * Handles the behavior for displaying and updating the list of items.
- *
- * This function is responsible for managing the behavior related to displaying and updating
- * the list of items based on filtering and pagination. It handles the addition of new items,
- * pagination controls, and item display based on the 'matches' data.
- *
- * @function
- * @returns {void}
- */
+
 
 
 /**

@@ -1,5 +1,5 @@
-import { authors, BOOKS_PER_PAGE } from '../data.js';
-import { allHtmlElements } from '../helpers.js';
+import { authors, books, BOOKS_PER_PAGE } from '../data.js';
+import { allHtmlElements } from './helpers.js';
 
 /**
  * Generates book previews and appends them to the list.
@@ -30,7 +30,8 @@ const generateBookPreviews = (matches, page) => {
       starting.appendChild(element);
     }
   
-    document.querySelector('[data-list-items]').appendChild(starting);
+   allHtmlElements.dataListItems.appendChild(starting);
   };
+  console.log(generateBookPreviews(books,0))
   
   export {generateBookPreviews};
