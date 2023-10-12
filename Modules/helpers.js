@@ -1,4 +1,8 @@
-export let allHtmlElements = {
+//@ts-check
+
+/**
+ *an object with all the html elements .
+ */ export let allHtmlElements = {
     dataListItems: document.querySelector("[data-list-items]"),
     dataSearchGenre: document.querySelector("[data-search-genres]"),
     dataSearchAuthor: document.querySelector("[data-search-authors]"),

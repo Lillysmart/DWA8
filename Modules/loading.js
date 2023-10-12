@@ -1,40 +1,85 @@
-import { authors, books, BOOKS_PER_PAGE } from '../data.js';
-import { allHtmlElements } from './helpers.js';
+import { authors, books, BOOKS_PER_PAGE } from "../data.js";
+import { allHtmlElements } from "./helpers.js";
 
 /**
- * Generates book previews and appends them to the list.
+ * Create a book preview object with a method to generate preview HTML.
  *
- * @param {Array} matches - An array of book objects to generate previews from.
- * @param {number} page - The current page number for pagination.
+ * @param {object} bookData - The data for the book.
+ * @returns {object} - An object with a 'generatePreviewHTML' method.
  */
-const generateBookPreviews = (matches, page) => {
-    const starting = document.createDocumentFragment();
-  
-    for (const { author, id, image, title } of matches.slice(page * BOOKS_PER_PAGE, (page +1) * BOOKS_PER_PAGE)) {
-      const element = document.createElement('button');
-      element.classList = 'preview';
-      element.setAttribute('data-preview', id);
-  
+const createBookPreview = (bookData) => {
+  const privateData = {
+    title: bookData.title || "No Title",
+    author: bookData.author || "Unknown Author",
+    image: bookData.image || "",
+  };
+
+  return {
+    /**
+     * Generate HTML for a book preview.
+     * @returns {HTMLElement} - The HTML element representing the book preview.
+     */
+    generatePreviewHTML: () => {
+      const element = document.createElement("button");
+      element.classList = "preview";
+      element.setAttribute("data-preview", bookData.id);
+
       element.innerHTML = `
         <img
           class="preview__image"
-          src="${image}"
+          src="${bookData.image}"
         />
         
         <div class="preview__info">
-          <h3 class="preview__title">${title}</h3>
-          <div class="preview__author">${authors[author]}</div>
+          <h3 class="preview__title">${bookData.title}</h3>
+          <div class="preview__author">${authors[bookData.author]}</div>
         </div>
       `;
-  
-      starting.appendChild(element);
-    }
-  
-   allHtmlElements.dataListItems.appendChild(starting);
+
+      return element;
+    },
+
+    get Title() {
+      privateData.title;
+    },
+    set Title(newTitle) {
+      privateData.title = newTitle;
+    },
+
+    get Author() {
+      privateData.author;
+    },
+    set Author(newAuthor) {
+      privateData.author = newAuthor;
+    },
+
+    get Image() {
+      privateData.image;
+    },
+    set Image(newImage) {
+      privateData.image = newImage;
+    },
   };
-  console.log(generateBookPreviews(books,0))
-  
-  export {generateBookPreviews};
- // console.log('matches:', matches);
-console.log('books:', books);
-console.log('BOOKS_PER_PAGE:', BOOKS_PER_PAGE);
+};
+/**
+ * Creates book previews and append them to the HTML element.
+ *
+ * @param {Array} matches - An array of book data objects to create previews from.
+ * @param {number} page - The current page number
+ */
+const generateBookPreviews = (matches, page) => {
+  const starting = document.createDocumentFragment();
+
+  for (const bookData of matches.slice(
+    page * BOOKS_PER_PAGE,
+    (page + 1) * BOOKS_PER_PAGE
+  )) {
+    const bookPreview = createBookPreview(bookData);
+    const element = bookPreview.generatePreviewHTML();
+    starting.appendChild(element);
+  }
+
+  allHtmlElements.dataListItems.appendChild(starting);
+};
+
+export { generateBookPreviews };
