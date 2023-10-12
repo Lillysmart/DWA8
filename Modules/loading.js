@@ -8,6 +8,7 @@ import { allHtmlElements } from "./helpers.js";
  * @returns {object} - An object with a 'generatePreviewHTML' method.
  */
 const createBookPreview = (bookData) => {
+  
   const privateData = {
     title: bookData.title || "No Title",
     author: bookData.author || "Unknown Author",
@@ -38,25 +39,34 @@ const createBookPreview = (bookData) => {
 
       return element;
     },
-
+     /**
+      * Get the title of the book preview
+      * @returns {string} - The title of the book preview
+      */
     get Title() {
       privateData.title;
     },
-    set Title(newTitle) {
+
+    /**
+     * Set the title of the book preview.
+     *
+     * @param {string} newTitle - The new title to set.
+     */
+    set title(newTitle) {
       privateData.title = newTitle;
     },
 
-    get Author() {
+    get author() {
       privateData.author;
     },
-    set Author(newAuthor) {
+    set author(newAuthor) {
       privateData.author = newAuthor;
     },
 
-    get Image() {
+    get image() {
       privateData.image;
     },
-    set Image(newImage) {
+    set image(newImage) {
       privateData.image = newImage;
     },
   };
@@ -83,3 +93,4 @@ const generateBookPreviews = (matches, page) => {
 };
 
 export { generateBookPreviews };
+
