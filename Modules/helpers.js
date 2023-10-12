@@ -14,4 +14,6 @@ export let allHtmlElements = {
     resultList: document.querySelector("[data-list-items]"),
     showMoreButton: document.querySelector("[data-list-button]"),
   };
+
+  //console.log(allHtmlElements.dataListButton)
   

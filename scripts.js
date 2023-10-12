@@ -1,16 +1,14 @@
-
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
-import { starting } from "./Modules/loading.js";
-import {matches} from "./Modules/loading.js"
+import { generateBookPreviews } from "./Modules/loading.js";
 import { allHtmlElements } from "./Modules/helpers.js";
+
 let page = 1;
- 
+let matches = books;
+console.log (books[0])
 
-
-allHtmlElements.dataListItems.appendChild(starting);
+generateBookPreviews(matches, page);
 
 const genreHtml = document.createDocumentFragment();
-
 const firstGenreElement = document.createElement("option");
 firstGenreElement.value = "any";
 firstGenreElement.innerText = "All Genres";
@@ -22,6 +20,8 @@ for (const [id, name] of Object.entries(genres)) {
   element.innerText = name;
   genreHtml.appendChild(element);
 }
+
+document.querySelector("[data-search-genres]").appendChild(genreHtml);
 
 allHtmlElements.dataSearchGenre.appendChild(genreHtml);
 
@@ -39,56 +39,7 @@ for (const [id, name] of Object.entries(authors)) {
   authorsHtml.appendChild(element);
 }
 allHtmlElements.dataSearchAuthor.appendChild(authorsHtml);
-/*
 
-/**
- * a function that Sets CSS custom properties for a color scheme based on the specified mode.
- * @param {boolean} isDark - A boolean indicating whether the color scheme
- * should be set to dark mode
- *
- */ /*
-const setColorSchemeProperties = (isDark) => {
-  const darkColor = "255, 255, 255";
-  const lightColor = "10, 10, 20";
-
-  document.documentElement.style.setProperty(
-    "--color-dark",
-    isDark ? darkColor : lightColor
-  );
-  document.documentElement.style.setProperty(
-    "--color-light",
-    isDark ? lightColor : darkColor
-  );
-};
-/**
- * a function that checks what theme the user selected and
- * calls the function setColorSchemeProperties() to set the color scheme .
- */ /*
-const handlePreferredColorScheme = () => {
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    dataSettingTheme.value = "night"; // Set the data attribute value
-    setColorSchemeProperties(true); // Set dark color scheme
-  } else {
-    setColorSchemeProperties(false); // Set light color scheme
-  }
-};
-handlePreferredColorScheme();*/
-
-/*
-const dataSettingTheme = document.querySelector('[data-settings-theme]')
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-       dataSettingTheme.value = 'night'
-    document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
-    document.documentElement.style.setProperty('--color-light', '10, 10, 20');
-} else {
-    dataSettingTheme.value = 'day'
-    document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
-    document.documentElement.style.setProperty('--color-light', '255, 255, 255');
-}
-*/
 
 if (matches.length - page * BOOKS_PER_PAGE > 0) {
   //dataListButton.disabled === true && matches.length - page * BOOKS_PER_PAGE;
@@ -98,16 +49,16 @@ if (matches.length - page * BOOKS_PER_PAGE > 0) {
 } else {
   0;
 }
-
-/*dataListButton.innerHTML = `
+/*
+allHtmlElements.dataListButton.innerHTML = `
     <span>Show more</span>
     <span class="list__remaining"> (${
       matches.length - page * BOOKS_PER_PAGE > 0
         ? matches.length - page * BOOKS_PER_PAGE
         : 0
     })</span>
-`;
-*/
+`;*/
+
 
 const handleDatasearchOverlay = () => {
   allHtmlElements.dataSearchOverlay.open = false;
@@ -168,7 +119,7 @@ allHtmlElements.dataSettingForm.addEventListener("submit", formHandle);
 
 const result = [];
 page = 1;
-//matches = result;
+matches = result;
 
 /**
  * Handle form submission.
@@ -222,10 +173,11 @@ const updateResults = (filteredBooks) => {
   }
 
   // Determine the range of books to display based on pagination
-  const startIndex = (page - 1) * BOOKS_PER_PAGE;
-  const endIndex = startIndex + BOOKS_PER_PAGE;
+ const startIndex = (page - 1) * BOOKS_PER_PAGE;
+ const endIndex = startIndex + BOOKS_PER_PAGE;
 
   // Create and append elements for the filtered books within the specified range
+
   const fragment = document.createDocumentFragment();
   for (let i = startIndex; i < endIndex && i < filteredBooks.length; i++) {
     const book = filteredBooks[i];
@@ -275,37 +227,7 @@ allHtmlElements.dataSearchForm.addEventListener("submit", handleFormSubmission);
  * @function
  * @returns {void}
  */
-const newDataListHandle = () => {
-  const fragment = document.createDocumentFragment();
 
-  for (const { author, id, image, title } of matches.slice(
-    page * BOOKS_PER_PAGE,
-    (page + 1) * BOOKS_PER_PAGE
-  )) {
-    const element = document.createElement("button");
-    element.classList = "preview";
-    element.setAttribute("data-preview", id);
-
-    element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-
-    fragment.appendChild(element);
-  }
-
-  allHtmlElements.dataListItems.appendChild(fragment);
-  page += 1;
-};
-
-allHtmlElements.dataListButton.addEventListener("click", newDataListHandle);
 
 /**
  * Handles the click event on preview items, displaying additional book details.

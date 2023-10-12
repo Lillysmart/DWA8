@@ -1,40 +1,36 @@
-//@ts-check
-export const starting = document.createDocumentFragment();
-
-import { books, authors, genres, BOOKS_PER_PAGE } from "../data.js";
-import { allHtmlElements } from "./helpers.js";
-
-export let matches = books;
+import { authors, BOOKS_PER_PAGE } from '../data.js';
+import { allHtmlElements } from '../helpers.js';
 
 /**
+ * Generates book previews and appends them to the list.
  *
- * @param {*} param0
+ * @param {Array} matches - An array of book objects to generate previews from.
+ * @param {number} page - The current page number for pagination.
  */
-const createBookPreview = ({ image, title }) => {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  //element.setAttribute("data-preview", id)
-
-  element.innerHTML = `
+const generateBookPreviews = (matches, page) => {
+    const starting = document.createDocumentFragment();
+  
+    for (const { author, id, image, title } of matches.slice(page * BOOKS_PER_PAGE, (page +1) * BOOKS_PER_PAGE)) {
+      const element = document.createElement('button');
+      element.classList = 'preview';
+      element.setAttribute('data-preview', id);
+  
+      element.innerHTML = `
         <img
-            class="preview__image"
-            src="${image}"
+          class="preview__image"
+          src="${image}"
         />
+        
         <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            </div>`;
-
-  return element;
-};
-const bookPreviews = matches
-  .slice(0, BOOKS_PER_PAGE)
-  .map((bookData) => createBookPreview(bookData));
-
-bookPreviews.forEach((previewElement) => {
-  starting.appendChild(previewElement);
-});
-//createPreview(book)
-console.log(allHtmlElements)
-//allHtmlElements.dataListButton.addEventListener("click", newDataListHandle);
-
-//allHtmlElements.dataListItems.appendChild(starting);
+          <h3 class="preview__title">${title}</h3>
+          <div class="preview__author">${authors[author]}</div>
+        </div>
+      `;
+  
+      starting.appendChild(element);
+    }
+  
+    document.querySelector('[data-list-items]').appendChild(starting);
+  };
+  
+  export {generateBookPreviews};
