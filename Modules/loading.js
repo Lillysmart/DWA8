@@ -35,3 +35,6 @@ const generateBookPreviews = (matches, page) => {
   console.log(generateBookPreviews(books,0))
   
   export {generateBookPreviews};
+ // console.log('matches:', matches);
+console.log('books:', books);
+console.log('BOOKS_PER_PAGE:', BOOKS_PER_PAGE);

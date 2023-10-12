@@ -49,7 +49,7 @@ if (matches.length - page * BOOKS_PER_PAGE > 0) {
 } else {
   0;
 }
-/*
+
 allHtmlElements.dataListButton.innerHTML = `
     <span>Show more</span>
     <span class="list__remaining"> (${
@@ -57,7 +57,7 @@ allHtmlElements.dataListButton.innerHTML = `
         ? matches.length - page * BOOKS_PER_PAGE
         : 0
     })</span>
-`;*/
+`;
 
 
 const handleDatasearchOverlay = () => {
@@ -86,6 +86,7 @@ document
 document.querySelector("[data-list-close]").addEventListener("click", () => {
   document.querySelector("[data-list-active]").open = false;
 });
+
 /**
  * Handles the submission of a form.
  *
@@ -211,6 +212,29 @@ const updateResults = (filteredBooks) => {
       remainingBooks > 0 ? remainingBooks : 0
     })</span>
   `;
+
+
+// Attach a click event listener to the "dataListButton"
+allHtmlElements.dataListButton.addEventListener('click', () => {
+  // Increment the page variable
+  page++;
+
+  // Generate previews for the next page of books
+  const newBookPreviews = generateBookPreviews(matches, page - 1);
+
+  // Append the new previews to the existing list
+  document.querySelector('[data-list-items]').appendChild(newBookPreviews);
+
+  // Check if there are more pages to display
+  if (page * BOOKS_PER_PAGE < matches.length) {
+    allHtmlElements.dataListButton.disabled = false; // Enable the button
+  } else {
+    allHtmlElements.dataListButton.disabled = true; // Disable the button if no more books
+  }
+});
+
+
+
 
   // Scroll to the top of the page
   window.scrollTo({ top: 0, behavior: "smooth" });

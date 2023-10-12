@@ -16,4 +16,4 @@ export let allHtmlElements = {
   };
 
   //console.log(allHtmlElements.dataListButton)
-  
+  console.log (allHtmlElements.showMoreButton)
